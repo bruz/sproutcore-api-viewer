@@ -1,0 +1,49 @@
+== SproutCore API Documentation Viewer
+
+=== See it already in action
+
+If you want to use the viewer and don't need to run it locally, see http://bruz.github.com/sc-docs.
+
+=== Building the documentation indexes and running the viewer
+
+Make sure you have the following prerequisites:
+- Ruby
+- RubyGems
+- SproutCore's gem dependecies (the easier way to get these is to 'gem install sproutcore')
+- Java (for JsDoc)
+
+Before running the viewer, you'll need to build the documentation indexes. First grab a customized version of Abbot (SproutCore's build tools):
+
+  git clone git://github.com/bmarzolf/sproutcore-abbot.git bruz-sproutcore-abbot
+  mkdir bruz-sproutcore-abbot/frameworks
+  git clone git://github.com/sproutit/sproutcore.git bruz-sproutcore-abbot/frameworks/sproutcore
+
+Then you can check out the viewer and build the docs:
+
+  git clone git://github.com/bmarzolf/sproutcore-api-viewer.git
+  cd sproutcore-api-viewer
+  ruby ../bruz-sproutcore-abbot/bin/sc-docs sproutcore
+
+This may take a while, and will generate the docs under tmp/docs. When that's done, run:
+
+  ruby ../bruz-sproutcore-abbot/bin/sc-server
+
+You should now be able to open the viewer at http://localhost:4020/docs.
+
+=== Building and deploying the viewer
+
+Once built, the viewer can be deployed to any common web server capable of serving static files (or even GitHub Pages).
+
+Before building the app, first set up the customized Abbot and build the view docs as described above. If you have your web server pointed at /var/www as the document root, you would build and deploy as follows:
+
+  ruby ../bruz-sproutcore-abbot/bin/sc-build
+  cp -r tmp/docs tmp/build/sc-docs/static tmp/build/sc-docs/static/docs/en/*/index.html /var/www/sc-docs
+
+That's it!
+
+=== Future possibilities
+
+Although the viewer currently serves my needs, here are some desirable features that could be added in the future:
+- Choose between different apps/frameworks under tmp/docs
+- (Variation on above) Choose between different versions of sproutcore
+- Allow building of docs from the app (as originally envisioned for the SproutCore docs viewer)
